@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mines Signal</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+
+    /* Rasm fon */
+    background: 
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("money.jpg") center/cover no-repeat fixed;
+}
+
+/* Container */
+.container {
+    padding-top: 40px;
+}
+
+/* Sarlavha */
+h1 {
+    font-size: 28px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Katak */
+.box {
+    width: 50px;
+    height: 50px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 8px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    transition: all 0.3s ease;
+}
+
+/* Aktiv katak */
+.active {
+    background: linear-gradient(145deg,#ffd700,#ffb300);
+    box-shadow: 
+        0 0 12px rgba(255,215,0,0.9),
+        0 0 25px rgba(255,200,0,0.6);
+    transform: scale(1.1);
+}
+
+/* Button */
+button {
+    margin-top: 35px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(145deg,#ffd700,#ffb300);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255,200,0,0.6);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MINES SIGNAL</h1>
+    <div class="grid" id="grid"></div>
+    <button onclick="generateSignal()">GET SIGNAL</button>
+</div>
+
+<script>
+const grid = document.getElementById("grid");
+
+// 25 ta katak yaratish
+for (let i = 0; i < 25; i++) {
+    const div = document.createElement("div");
+    div.classList.add("box");
+    grid.appendChild(div);
+}
+
+function generateSignal() {
+    const boxes = document.querySelectorAll(".box");
+
+    // Tozalash
+    boxes.forEach(box => {
+        box.classList.remove("active");
+        box.textContent = "";
+    });
+
+    let selected = [];
+
+    while (selected.length < 5) {
+        let rand = Math.floor(Math.random() * 25);
+        if (!selected.includes(rand)) {
+            selected.push(rand);
+        }
+    }
+
+    // Sekin ketma-ket ochish
+    selected.forEach((index, i) => {
+        setTimeout(() => {
+            boxes[index].classList.add("active");
+            boxes[index].textContent = "⭐";
+        }, i * 800);
+    });
+}
+</script>
+
+</body>
+</html>
